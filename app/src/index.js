@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 import Reducer from './reducers';
-import App from './component/App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 const store = legacy_createStore(Reducer);
