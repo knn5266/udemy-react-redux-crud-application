@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { postEvent } from '../actions';
-
-class EventsNew extends Component {
+import { withRouter } from '../withRouter';
+class EventsNew extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -27,7 +27,7 @@ class EventsNew extends Component {
 
   async onSubmit(values) {
     await this.props.postEvent(values);
-    this.props.history.push('/');
+    this.props.router.navigate('/home');
   }
 
   render() {
