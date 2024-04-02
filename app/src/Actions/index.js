@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useNavigate } from 'react-router-dom';
+
 
 export const READ_EVENTS = 'READ_EVENTS';
 export const CREATE_EVENT = 'CREATE_EVENT';

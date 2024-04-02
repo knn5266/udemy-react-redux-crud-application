@@ -27,7 +27,7 @@ class EventsNew extends React.Component {
 
   async onSubmit(values) {
     await this.props.postEvent(values);
-    this.props.router.navigate('/home');
+    this.props.navigate('/');
   }
 
   render() {
@@ -45,7 +45,7 @@ class EventsNew extends React.Component {
         <div>
           <Field
             label="Body"
-            name="Body"
+            name="body"
             type="text"
             component={this.renderField}
           />
@@ -74,4 +74,4 @@ const mapDispatchToProps = { postEvent };
 export default connect(
   null,
   mapDispatchToProps
-)(reduxForm({ validate, form: 'eventNewForm' })(EventsNew));
+)(reduxForm({ validate, form: 'eventNewForm' })(withRouter(EventsNew)));
