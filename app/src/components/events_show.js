@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
-import { postEvent } from '../actions';
+import { getEvent, deleteEvent, putEvent } from '../actions';
 import { withRouter } from '../withRouter';
-class EventsNew extends React.Component {
+
+class EventsShow extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
+
+  componentDidMount() {
+    const { id } = this.props.params;
+    if (id) this.props.getEvent(id);
+  }
+
   renderField(field) {
     const {
       input,
@@ -31,8 +38,14 @@ class EventsNew extends React.Component {
     );
   }
 
+  async onDeleteClick() {
+    const { id } = this.props.params;
+    await this.props.deleteEvent(id);
+    this.props.navigate('/');
+  }
+
   async onSubmit(values) {
-    await this.props.postEvent(values);
+    await this.props.putEvent(values);
     this.props.navigate('/');
   }
 
@@ -69,6 +82,11 @@ class EventsNew extends React.Component {
           style={style}
           containerElement={<Link to="/" />}
         />
+        <RaisedButton
+          label="Delete"
+          style={style}
+          onClick={this.onDeleteClick}
+        />
       </form>
     );
   }
@@ -83,9 +101,19 @@ const validate = (values) => {
   return errors;
 };
 
-const mapDispatchToProps = { postEvent };
+const mapStateToProps = (state, ownProps) => {
+  const event = state.events[ownProps.params.id];
+  return { initialValues: event, event };
+};
+const mapDispatchToProps = { deleteEvent, getEvent, putEvent };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(reduxForm({ validate, form: 'eventNewForm' })(withRouter(EventsNew)));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(
+    reduxForm({ validate, form: 'eventShowForm', enableReinitialize: true })(
+      EventsShow
+    )
+  )
+);
