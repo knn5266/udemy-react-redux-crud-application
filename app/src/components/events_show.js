@@ -6,8 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { getEvent, deleteEvent, putEvent } from '../actions';
 import { withRouter } from '../withRouter';
-import { useParams } from 'react-router-dom';
-const params = useParams();
+
 class EventsShow extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +15,7 @@ class EventsShow extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
     if (id) this.props.getEvent(id);
   }
 
@@ -40,7 +39,7 @@ class EventsShow extends React.Component {
   }
 
   async onDeleteClick() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
     await this.props.deleteEventsAction(id);
     this.props.navigate('/');
   }
@@ -103,14 +102,14 @@ const validate = (values) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const event = state.events[ownProps.match.params.id];
+  const event = state.events[ownProps.params.id];
   return { initialValues: event, event };
 };
 const mapDispatchToProps = { deleteEvent, getEvent, putEvent };
 
 export default connect(
-  null,
-  null
+  mapStateToProps,
+  mapDispatchToProps
 )(
   reduxForm({ validate, form: 'eventShowForm', enableReinitialize: true })(
     withRouter(EventsShow)
