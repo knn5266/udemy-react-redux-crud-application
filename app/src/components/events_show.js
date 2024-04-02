@@ -6,7 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { getEvent, deleteEvent, putEvent } from '../actions';
 import { withRouter } from '../withRouter';
-
+import { useParams } from 'react-router-dom';
+const params = useParams();
 class EventsShow extends React.Component {
   constructor(props) {
     super(props);
