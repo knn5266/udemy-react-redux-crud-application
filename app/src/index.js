@@ -34,7 +34,6 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </MuiThemeProvider>,
-
   document.getElementById('root')
 );
 reportWebVitals();
