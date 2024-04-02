@@ -10,6 +10,7 @@ import './index.css';
 import reducer from './reducers';
 import EventsIndex from './components/events_index';
 import EventsNew from './components/events_new';
+import EventsShow from './components/events_show';
 import reportWebVitals from './reportWebVitals';
 
 const enhancer =
@@ -17,13 +18,14 @@ const enhancer =
     ? composeWithDevTools(applyMiddleware(thunk))
     : applyMiddleware(thunk);
 const store = legacy_createStore(reducer, enhancer);
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
-        <Route exact path="/events/new" element={<EventsNew />} />
+        <Route path="/events/new" element={<EventsNew />} />
+        <Route path="/events/:id" element={<EventsShow />} />
         <Route exact path="/" element={<EventsIndex />} />
+        <Route exact path="/events" element={<EventsIndex />} />
       </Routes>
     </BrowserRouter>
   </Provider>,
