@@ -40,7 +40,7 @@ class EventsShow extends React.Component {
 
   async onDeleteClick() {
     const { id } = this.props.params;
-    await this.props.deleteEventsAction(id);
+    await this.props.deleteEvent(id);
     this.props.navigate('/');
   }
 
@@ -107,11 +107,13 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = { deleteEvent, getEvent, putEvent };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
-  reduxForm({ validate, form: 'eventShowForm', enableReinitialize: true })(
-    withRouter(EventsShow)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(
+    reduxForm({ validate, form: 'eventShowForm', enableReinitialize: true })(
+      EventsShow
+    )
   )
 );
